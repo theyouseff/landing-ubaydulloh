@@ -289,6 +289,14 @@ p{margin:0;}
 @media (hover:hover){
   .quiz-opt:not(.is-selected):hover{border-color:rgba(255,255,255,.34);}
 }
+.quiz-input{
+  width:100%;min-height:52px;padding:0 20px;border-radius:100px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);
+  color:#EDEDF2;font-size:15px;font-family:var(--ff-text);
+  transition:border-color .2s ease, background-color .2s ease;
+}
+.quiz-input::placeholder{color:#75767F;}
+.quiz-input:focus{outline:none;border-color:var(--accent-2);background:rgba(255,255,255,.08);}
 .quiz-finish{width:100%;margin-top:6px;}
 .quiz-hint{margin-top:14px;text-align:center;font-size:13px;color:var(--muted);}
 

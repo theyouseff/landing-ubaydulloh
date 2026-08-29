@@ -155,9 +155,15 @@ if (reduced || !('IntersectionObserver' in window)) {
 
 /* ---------- 5. Kvize oynasi ----------
    "Videoni ko'rish" tugmasi (teaser blok) videoga to'g'ridan-to'g'ri
-   olib bormaydi — avval shu kvize ochiladi. Barcha 3 savolga javob berilgach,
-   "Videoni ko'rish" tugmasi chiqadi va CONFIG.videoUrl'ni ochadi (backend kerak emas,
-   javoblar hech qayerga yuborilmaydi — bu faqat qiziqishni isituvchi bosqich). */
+   olib bormaydi — avval shu kvize ochiladi: 1) joylashuv (tugma variantlar),
+   2) ism, 3) telefon raqami (ikkalasi ham matn maydoni — lead sifatida).
+   Barcha 3 savolga javob berilgach "Videoni ko'rish" tugmasi chiqadi va
+   CONFIG.videoUrl'ni ochadi.
+   MUHIM: hozircha backend/CRM ulanmagan — ism va telefon hech qayerga
+   YUBORILMAYDI, faqat foydalanuvchi ko'z oldida qoladi. Buni real leadga
+   aylantirish uchun finishBtn bosilganda quizName/quizPhone qiymatlarini
+   qandaydir backend'ga (Telegram bot, Google Sheets, CRM va h.k.) yuborish
+   kerak bo'ladi — bu qadam hali qo'shilmagan. */
 (function () {
   var overlay = document.getElementById('quizOverlay');
   var card = overlay ? overlay.querySelector('.quiz-card') : null;
@@ -167,10 +173,14 @@ if (reduced || !('IntersectionObserver' in window)) {
   var questions = overlay ? overlay.querySelectorAll('.quiz-q') : [];
   if (!overlay || !card) return;
 
+  function isQuestionAnswered(q) {
+    var input = q.querySelector('.quiz-input');
+    if (input) return input.value.trim().length > 0;
+    return !!q.querySelector('.quiz-opt.is-selected');
+  }
+
   function allAnswered() {
-    return Array.prototype.every.call(questions, function (q) {
-      return q.querySelector('.quiz-opt.is-selected');
-    });
+    return Array.prototype.every.call(questions, isQuestionAnswered);
   }
 
   function updateFinishVisibility() {
@@ -219,6 +229,9 @@ if (reduced || !('IntersectionObserver' in window)) {
         opt.classList.add('is-selected');
         updateFinishVisibility();
       });
+    });
+    q.querySelectorAll('.quiz-input').forEach(function (inp) {
+      inp.addEventListener('input', updateFinishVisibility);
     });
   });
 

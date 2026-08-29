@@ -73,11 +73,16 @@ qismidagi `og:image` izohini ochib qo'ying (ikki qator).
 ### Kvize oynasi (`#quizOverlay`)
 
 "Videoni ko'rish" tugmasi (teaser blok) to'g'ridan-to'g'ri videoga olib bormaydi —
-avval shu kvize ochiladi: 3 ta savol (yashash joyi, tish soni, noqulaylik darajasi),
-har biri pilla shakldagi variant tugmalar bilan. Barcha savolga javob berilgach
-"Videoni ko'rish" tugmasi chiqadi va `CONFIG.videoUrl`ni yangi tabda ochadi.
-Backend kerak emas — javoblar hech qayerga yuborilmaydi, bu faqat qiziqishni
-isituvchi bosqich (mikro-committment).
+avval shu kvize ochiladi: 1) yashash joyi (pilla variant tugmalar), 2) ism
+(matn maydoni), 3) telefon raqami (matn maydoni) — bular real lead sifatida
+mo'ljallangan. Barcha 3 savolga javob berilgach (ism/telefon bo'sh bo'lmasligi
+kifoya) "Videoni ko'rish" tugmasi chiqadi va `CONFIG.videoUrl`ni yangi tabda ochadi.
+
+⚠️ **Hozircha backend/CRM ulanmagan** — ism va telefon raqami hech qayerga
+yuborilmaydi, faqat foydalanuvchi ko'zi oldida turadi. Buni real lead sifatida
+yig'ish uchun `main.js`dagi `finishBtn` bosilgan payt `#quizName`/`#quizPhone`
+qiymatlarini biror backend'ga (Telegram bot, Google Sheets, CRM va h.k.)
+yuborish kerak bo'ladi — bu qadam hali qo'shilmagan.
 
 **Muhim texnik nuqtalar (ikkalasi ham amalda uchragan haqiqiy xatolarni tuzatadi):**
 
