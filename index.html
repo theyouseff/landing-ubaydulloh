@@ -111,6 +111,10 @@
       <li class="reveal"><p>Aynan sizga qaysi implant turi to'g'ri kelishi</p></li>
       <li class="reveal"><p>Tish yo'qotishning asosiy sabablari</p></li>
     </ul>
+
+    <div class="mid-cta reveal">
+      <a class="btn btn--primary js-quiz-trigger" data-cta="tease" href="#"><span class="btn__play" aria-hidden="true"></span>Videoni ko'rish</a>
+    </div>
   </div>
 </section>
 
@@ -131,6 +135,51 @@
     <div class="offer-timer__cell"><b data-timer="h">08</b><span>soat</span></div>
     <div class="offer-timer__cell"><b data-timer="m">00</b><span>daq.</span></div>
     <div class="offer-timer__cell"><b data-timer="s">00</b><span>son.</span></div>
+  </div>
+</div>
+
+<!-- ========== KVIZE OYNASI (Videoni ko'rish tugmasi bosilganda ochiladi) ========== -->
+<div class="quiz-overlay" id="quizOverlay" hidden>
+  <div class="quiz-card" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+    <button type="button" class="quiz-close" id="quizClose" aria-label="Yopish">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <p class="quiz-eyebrow">Ariza qoldiring</p>
+    <h2 class="quiz-title" id="quizTitle">Konsultatsiyaga yozilish</h2>
+
+    <div class="quiz-q">
+      <p class="quiz-q__label">1. Hozir qayerda istiqomat qilasiz?</p>
+      <div class="quiz-opts">
+        <button type="button" class="quiz-opt">Toshkent shahri</button>
+        <button type="button" class="quiz-opt">Toshkent viloyati</button>
+        <button type="button" class="quiz-opt">Boshqa viloyat</button>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="quiz-q__label">2. Nechta tishingiz yetishmayapti?</p>
+      <div class="quiz-opts">
+        <button type="button" class="quiz-opt">1 ta</button>
+        <button type="button" class="quiz-opt">2–3 ta</button>
+        <button type="button" class="quiz-opt">4–6 ta</button>
+        <button type="button" class="quiz-opt">6 tadan ortiq</button>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="quiz-q__label">3. Bu muammo sizga qanchalik noqulaylik bermoqda?</p>
+      <div class="quiz-opts quiz-opts--stack">
+        <button type="button" class="quiz-opt">Juda bezovta qilmoqda — tezroq hal qilmoqchiman</button>
+        <button type="button" class="quiz-opt">Noqulay, lekin chidab turibman</button>
+        <button type="button" class="quiz-opt">Hozircha jiddiy emas</button>
+      </div>
+    </div>
+
+    <a class="btn btn--primary quiz-finish" id="quizFinish" data-cta="quiz" href="#" hidden>
+      <span class="btn__play" aria-hidden="true"></span>Videoni ko'rish
+    </a>
+    <p class="quiz-hint" id="quizHint">Videoni ochish uchun barcha savollarga javob bering.</p>
   </div>
 </div>
 

@@ -1,11 +1,12 @@
-# Implantologiya landing (statik ma'lumot sahifasi)
+# Implantologiya landing (VSL bridge page)
 
-⚠️ **Sahifada hech qanday tugma yo'q.** Video/kvize ochuvchi CTA'lar mijoz
-talabi bilan olib tashlandi (2026-08-29). Sayt hozircha faqat statik ma'lumot
-ko'rsatadi: sarlavha, rasm, teaser matn, taymer va aloqa ikonkalari (telefon,
-Telegram, Instagram, YouTube — bular header/footer'da ishlaydi).
+Voronka: **Landing → "Videoni ko'rish" tugmasi → 3 savolli kvize (so'rovnoma) →
+YouTube VSL video**. Sahifaning yagona vazifasi — mobil tashrifchini videoni
+ochishga ko'ndirish.
 
-Videoni ochish yoki lead yig'ish uchun sahifada hech qanday yo'l yo'q.
+**Jonli sayt:** https://theyouseff.github.io/landing-ubaydulloh/ (GitHub Pages,
+`main` branch'dan avtomatik yangilanadi — `git push` qilsangiz bir necha
+daqiqada shu manzilda ko'rinadi).
 
 ---
 
@@ -20,17 +21,15 @@ python3 -m http.server 8080
 
 Keyin brauzerda: `http://localhost:8080`
 
-**Jonli sayt:** https://theyouseff.github.io/landing-ubaydulloh/ (GitHub Pages,
-`main` branch'dan avtomatik yangilanadi — `git push` qilsangiz bir necha
-daqiqada shu manzilda ko'rinadi).
-
 ---
 
 ## 2. `CONFIG` — `assets/js/main.js` boshida
 
 ```js
 const CONFIG = {
+  videoUrl: "https://www.youtube.com/watch?v=oepseejoW4k&t=287s", // ✅
   phone: "+998 95 507 78 87",             // ✅
+  openInNewTab: true,
   social: {                               // ✅ hammasi to'ldirilgan
     telegram:  "https://t.me/drubaydulloh_implant/35",
     instagram: "https://www.instagram.com/dr.ubaydull0h/",
@@ -61,12 +60,42 @@ qismidagi `og:image` izohini ochib qo'ying (ikki qator).
 
 ## 4. Sahifa strukturasi
 
-1. **Hero** — sarlavha, matn (CTA yo'q)
+1. **Hero** — sarlavha, matn
 2. **Rasm** — `assets/img/implant-natija.jpg`, atrofida ko'k nur
-3. **«Videoda sizni nimalar kutmoqda?»** — 3 punktli teaser (CTA yo'q)
+3. **«Videoda sizni nimalar kutmoqda?»** — 3 punktli teaser + **"Videoni ko'rish"
+   tugmasi** (kvizeni ochadi)
 4. **Footer** — logotip, manzil, telefon, huquqiy eslatma
 5. **Taklif taymeri** — ekranning o'ng pastki burchagiga qadalgan (`position: fixed`),
    butun sahifa davomida ko'rinib turadi, scroll bilan birga "yuradi", bosilmaydi
+6. **Kvize oynasi** (`#quizOverlay`) — pastdan chiqadigan modal, 3 savol, javob
+   berilgach "Videoni ko'rish" tugmasi paydo bo'lib videoni ochadi
+
+### Kvize oynasi (`#quizOverlay`)
+
+"Videoni ko'rish" tugmasi (teaser blok) to'g'ridan-to'g'ri videoga olib bormaydi —
+avval shu kvize ochiladi: 3 ta savol (yashash joyi, tish soni, noqulaylik darajasi),
+har biri pilla shakldagi variant tugmalar bilan. Barcha savolga javob berilgach
+"Videoni ko'rish" tugmasi chiqadi va `CONFIG.videoUrl`ni yangi tabda ochadi.
+Backend kerak emas — javoblar hech qayerga yuborilmaydi, bu faqat qiziqishni
+isituvchi bosqich (mikro-committment).
+
+**Muhim texnik nuqtalar (ikkalasi ham amalda uchragan haqiqiy xatolarni tuzatadi):**
+
+1. Trigger tugmaga (`.js-quiz-trigger`) haqiqiy `videoUrl` to'g'ridan-to'g'ri href
+   qilib QO'YILMAYDI — `href="#"` qoladi. Faqat kvize oxiridagi tugma (`#quizFinish`)
+   haqiqiy linkka ega bo'ladi. Aks holda ba'zi joylashtirilgan (embed) muhitlarda
+   cross-origin havola JS ishlashidan oldin brauzer tomonidan ushlab qolinib,
+   kvizeni chetlab o'tib to'g'ridan-to'g'ri videoni ochib yuboradi.
+2. `.quiz-overlay{display:flex}` va `.btn{display:inline-flex}` kabi qoidalar
+   brauzerning standart `[hidden]{display:none}` qoidasini bosib ketadi (bir xil
+   ustuvorlikda oxirgi yozilgan qoida — muallif stili — g'alaba qiladi). Shuning
+   uchun ikkalasi uchun ham aniq `[hidden]{display:none}` yozilgan — aks holda
+   element "yashiringan" holatda ham ekranda ko'rinib/joy egallab turadi
+   (aynan shu "sahifa oldida shaffof qatlam" muammosining sababi edi).
+3. Modalni ochishda `requestAnimationFrame` o'rniga majburiy reflow
+   (`void overlay.offsetHeight`) ishlatiladi — ba'zi muhitlarda rAF kechikib/
+   ishlamay qolib, fade-in animatsiyasi "yopishib" yarim shaffof holatda
+   qolib ketishi mumkin edi.
 
 ### Taklif taymeri (`.offer-timer`)
 
@@ -93,38 +122,17 @@ oq rangga qaytadi — `main.js`ning 4-bo'limi, har freymda tekshirib turadi.
 ```
 index.html                       — butun sahifa (barcha matnlar shu yerda)
 assets/css/style.css             — dizayn tizimi (ranglar :root da)
-assets/js/main.js                — CONFIG, taymer, scroll-animatsiya
+assets/js/main.js                — CONFIG, taymer, scroll-animatsiya, kvize
 assets/img/implant-natija.jpg    — sahifada ishlatilayotgan yagona rasm
 assets/img/                      — case-1..3.jpg, doctor.jpg — hozircha ishlatilmaydi
 ```
 
 Ranglarni o'zgartirish: `style.css` boshidagi `:root` — `--accent-2` matn/ikonka
-akcenti, `--accent-btn` taymerdagi urg'u rangi.
+akcenti, `--accent-btn` / `--accent-btn-hi` tugma va taymerdagi urg'u rangi.
 
 ---
 
-## 6. Avval nima bor edi (CTA/kvize bir necha marta qo'shilib-olib tashlangan)
-
-Sahifada avval **CTA tugma → 3 savolli kvize oynasi → YouTube video** voronkasi
-bor edi (referens: MedDent uslubidagi so'rovnoma — oq/quyuq navy karta, pilla
-tugmalar). Mijoz buni bir necha marta qaytarib-olib tashlashni so'radi;
-oxirgi holat — **butunlay yo'q**.
-
-Agar kelajakda qaytarilishi kerak bo'lsa, quyidagilar kerak bo'ladi:
-- Teaser bo'limiga CTA tugma (`.btn.btn--primary`, `data-cta`, `js-quiz-trigger`)
-- Kvize oynasi (`#quizOverlay` — savollar, variant tugmalari, yakuniy CTA)
-- `CONFIG.videoUrl` va unga bog'liq JS
-- **MUHIM:** trigger tugmaga haqiqiy `videoUrl` to'g'ridan-to'g'ri href qilib
-  qo'yilmasligi kerak (`href="#"` qoladi, faqat kvize oxiridagi tugma haqiqiy
-  linkka ega bo'ladi) — aks holda ba'zi joylashtirilgan (embed) muhitlarda
-  havola JS ishlashidan oldin ushlab qolinib, kvizeni chetlab o'tadi.
-
-Qanday ko'rinishda bo'lishini (oddiy tugma, kvize, forma va h.k.) aniq ayting —
-shunga qarab quramiz.
-
----
-
-## 7. Tibbiy matn bo'yicha eslatma
+## 6. Tibbiy matn bo'yicha eslatma
 
 Matnlarda ataylab «100% kafolat», «hech qachon og'rimaydi» kabi mutlaq va'dalar yo'q
 (sarlavhadagi «KAFOLATLANGAN» so'zi mijozning o'z talabi bilan qo'yilgan — reklama
