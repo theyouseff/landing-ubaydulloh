@@ -267,8 +267,22 @@ if (reduced || !('IntersectionObserver' in window)) {
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
     var url = finishBtn.href;
+
+    /* MUHIM: brauzerlar (ayniqsa Safari/iPhone) setTimeout ichidan chaqirilgan
+       window.open()ni "foydalanuvchi so'ramagan popup" deb bloklaydi — chunki
+       u endi bosishning "to'g'ridan-to'g'ri natijasi" hisoblanmaydi. Shu sabab
+       video kechikishdan keyin OCHILMAY qolayotgan edi. Yechim: yangi tabni
+       HOZIROQ, bosish paytida (bo'sh holda) ochamiz — bu hali ruxsat etiladi —
+       keyin kechikish tugagach shu tabning manzilini almashtiramiz (bu esa
+       popup-bloker qoidasiga umuman tegishli emas). */
+    var newTab = CONFIG.openInNewTab ? window.open('', '_blank') : null;
+
     closeQuiz();
-    if (!loading) { window.open(url, '_blank', 'noopener'); return; }
+    if (!loading) {
+      if (CONFIG.openInNewTab) { if (newTab) newTab.location.href = url; else window.open(url, '_blank', 'noopener'); }
+      else location.href = url;
+      return;
+    }
 
     loading.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -276,12 +290,16 @@ if (reduced || !('IntersectionObserver' in window)) {
     loading.classList.add('is-on');
 
     setTimeout(function () {
-      if (CONFIG.openInNewTab) window.open(url, '_blank', 'noopener');
-      else location.href = url;
+      if (CONFIG.openInNewTab) {
+        if (newTab && !newTab.closed) newTab.location.href = url;
+        else window.open(url, '_blank', 'noopener'); // zaxira: tab blokланган/yopilgan bo'lsa
+      } else {
+        location.href = url;
+      }
       loading.classList.remove('is-on');
       document.body.style.overflow = '';
       setTimeout(function () { loading.hidden = true; }, 300);
-    }, 10000);
+    }, 3500);
   });
 
   updateFinishVisibility();
