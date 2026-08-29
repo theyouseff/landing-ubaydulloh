@@ -48,7 +48,7 @@ Header'ning o'ng tomonidagi pillada 4 ta ikonka bor: qo'ng'iroq (`CONFIG.phone`)
 | Nima | Qayerda | Hozirgi qiymat |
 |---|---|---|
 | Brend nomi / logotip | `index.html` — `.logo` (2 joyda: header va footer) | `DR.UBAYDULLOH` ✅ |
-| Manzil | footer `.ftr__txt` | `Toshkent sh., [manzil]` |
+| Manzil | footer `.ftr__txt` | `Bizning manzil: Toshkent shahri, Uchtepa tumani` ✅ |
 
 ### Ijtimoiy tarmoq uchun muqova
 
