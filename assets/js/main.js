@@ -249,20 +249,8 @@ if (reduced || !('IntersectionObserver' in window)) {
   });
 
   /* "Videoni ko'rish" bosilganda darhol videoga otqazib yubormaymiz —
-     avval qisqa "Tayyorlanmoqda" yuklanish oynasini ko'rsatamiz, keyin video
-     ochiladi. Harflarni birma-bir <span>ga bo'lib chiqaramiz — shunda CSS
-     har biriga alohida animatsiya-kechikish (delay) bera oladi ("yonib-o'chib"
-     ketma-ket effekt). */
+     avval qisqa "Video yuklanmoqda" oynasini ko'rsatamiz, keyin video ochiladi. */
   var loading = document.getElementById('quizLoading');
-  var loadingText = document.getElementById('quizLoadingText');
-  if (loadingText && loadingText.dataset.text) {
-    loadingText.dataset.text.split('').forEach(function (ch, i) {
-      var span = document.createElement('span');
-      span.textContent = ch;
-      span.style.animationDelay = (i * 0.08) + 's';
-      loadingText.appendChild(span);
-    });
-  }
 
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz

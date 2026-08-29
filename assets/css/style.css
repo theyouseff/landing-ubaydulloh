@@ -319,17 +319,11 @@ p{margin:0;}
 }
 @keyframes quizLoadingSpin{to{transform:rotate(360deg);}}
 .quiz-loading__text{
-  display:flex;gap:1px;font-family:var(--ff-display);font-weight:600;
+  font-family:var(--ff-display);font-weight:600;
   font-size:17px;letter-spacing:.01em;color:#fff;
-}
-.quiz-loading__text span{display:inline-block;opacity:.4;animation:quizLoadingLetter 1.2s ease-in-out infinite;}
-@keyframes quizLoadingLetter{
-  0%,100%{opacity:.4;transform:translateY(0);}
-  30%{opacity:1;transform:translateY(-3px);}
 }
 @media (prefers-reduced-motion:reduce){
   .quiz-loading__ring{animation:none;}
-  .quiz-loading__text span{animation:none;opacity:1;}
 }
 
 /* ---------- reveal ---------- */
