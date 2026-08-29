@@ -224,8 +224,9 @@ p{margin:0;}
 .ftr{padding-block:44px 108px;border-top:1px solid var(--line);}
 .ftr__in{display:grid;gap:14px;}
 .ftr__txt{color:var(--muted);font-size:14px;}
-.ftr__map{color:var(--accent-2);text-decoration:underline;text-underline-offset:2px;}
-@media (hover:hover){.ftr__map:hover{color:var(--text);}}
+.ftr__pin{color:var(--accent-2);vertical-align:-2px;flex:none;}
+.ftr__map{color:#fff;text-decoration:underline;text-underline-offset:2px;}
+@media (hover:hover){.ftr__map:hover{color:var(--accent-2);}}
 .ftr__tel{font-family:var(--ff-display);font-size:19px;font-weight:600;}
 .ftr__legal{color:#5F5F68;font-size:12px;line-height:1.55;margin-top:6px;}
 @media (min-width:820px){.ftr{padding-bottom:56px;}}
