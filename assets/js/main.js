@@ -248,8 +248,40 @@ if (reduced || !('IntersectionObserver' in window)) {
     });
   });
 
-  finishBtn.addEventListener('click', function () {
-    setTimeout(closeQuiz, 150); // href navigatsiyasi ketishga ulguradi, keyin oyna yopiladi
+  /* "Videoni ko'rish" bosilganda darhol videoga otqazib yubormaymiz —
+     avval qisqa "Tayyorlanmoqda" yuklanish oynasini ko'rsatamiz, keyin video
+     ochiladi. Harflarni birma-bir <span>ga bo'lib chiqaramiz — shunda CSS
+     har biriga alohida animatsiya-kechikish (delay) bera oladi ("yonib-o'chib"
+     ketma-ket effekt). */
+  var loading = document.getElementById('quizLoading');
+  var loadingText = document.getElementById('quizLoadingText');
+  if (loadingText && loadingText.dataset.text) {
+    loadingText.dataset.text.split('').forEach(function (ch, i) {
+      var span = document.createElement('span');
+      span.textContent = ch;
+      span.style.animationDelay = (i * 0.08) + 's';
+      loadingText.appendChild(span);
+    });
+  }
+
+  finishBtn.addEventListener('click', function (e) {
+    e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
+    var url = finishBtn.href;
+    closeQuiz();
+    if (!loading) { window.open(url, '_blank', 'noopener'); return; }
+
+    loading.hidden = false;
+    document.body.style.overflow = 'hidden';
+    void loading.offsetHeight; // majburiy reflow — fade-in doim ishga tushishi uchun
+    loading.classList.add('is-on');
+
+    setTimeout(function () {
+      if (CONFIG.openInNewTab) window.open(url, '_blank', 'noopener');
+      else location.href = url;
+      loading.classList.remove('is-on');
+      document.body.style.overflow = '';
+      setTimeout(function () { loading.hidden = true; }, 300);
+    }, 1600);
   });
 
   updateFinishVisibility();

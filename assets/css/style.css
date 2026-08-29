@@ -300,6 +300,38 @@ p{margin:0;}
 .quiz-finish{width:100%;margin-top:6px;}
 .quiz-hint{margin-top:14px;text-align:center;font-size:13px;color:var(--muted);}
 
+/* ---------- yuklanish oynasi (anketa tugagach, video ochilishidan oldin) ---------- */
+.quiz-loading{
+  position:fixed;inset:0;z-index:110;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+  background:radial-gradient(120% 120% at 50% 18%, #1a3379 0%, #0A0A0B 72%);
+  opacity:0;transition:opacity .3s ease;
+}
+.quiz-loading[hidden]{display:none;} /* [hidden]'ni display:flex bosib ketmasligi uchun aniq yozilgan */
+.quiz-loading.is-on{opacity:1;}
+.quiz-loading__ring{
+  width:84px;height:84px;border-radius:50%;flex:none;
+  background:conic-gradient(from 90deg, transparent 0deg, var(--accent-2) 130deg, var(--accent-btn) 270deg, transparent 360deg);
+  -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 11px), #000 calc(100% - 10px));
+  mask:radial-gradient(farthest-side, transparent calc(100% - 11px), #000 calc(100% - 10px));
+  filter:drop-shadow(0 0 18px rgba(42,75,232,.55));
+  animation:quizLoadingSpin 1s linear infinite;
+}
+@keyframes quizLoadingSpin{to{transform:rotate(360deg);}}
+.quiz-loading__text{
+  display:flex;gap:1px;font-family:var(--ff-display);font-weight:600;
+  font-size:17px;letter-spacing:.01em;color:#fff;
+}
+.quiz-loading__text span{display:inline-block;opacity:.4;animation:quizLoadingLetter 1.2s ease-in-out infinite;}
+@keyframes quizLoadingLetter{
+  0%,100%{opacity:.4;transform:translateY(0);}
+  30%{opacity:1;transform:translateY(-3px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .quiz-loading__ring{animation:none;}
+  .quiz-loading__text span{animation:none;opacity:1;}
+}
+
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
 .reveal.is-in{opacity:1;transform:none;}
