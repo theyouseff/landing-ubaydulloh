@@ -4,16 +4,10 @@
    ========================================================================== */
 
 const CONFIG = {
-  // 1) YouTube VSL videosi.
-  videoUrl: "https://www.youtube.com/watch?v=oepseejoW4k&t=287s",
-
-  // 2) Sarlavha va pastki paneldagi telefon raqami.
+  // 1) Sarlavha va pastki paneldagi telefon raqami.
   phone: "+998 95 507 78 87",
 
-  // 3) Videoni yangi tabda ochish (true) yoki shu tabda (false).
-  openInNewTab: true,
-
-  // 4) Ijtimoiy tarmoq sahifalari (header'dagi ikonkalar).
+  // 2) Ijtimoiy tarmoq sahifalari (header'dagi ikonkalar).
   social: {
     telegram: "https://t.me/drubaydulloh_implant/35",
     instagram: "https://www.instagram.com/dr.ubaydull0h/",
@@ -32,22 +26,7 @@ function trackCta(place) {
   } catch (e) { /* tracking hech qachon sahifani buzmasin */ }
 }
 
-/* ---------- 1. CTA tugmasini videoga bog'lash ----------
-   MUHIM: .js-quiz-trigger tugmaga (teaser blok) haqiqiy videoUrl href
-   sifatida QO'YILMAYDI — u avval kvize oynasini ochishi kerak. Agar cross-origin
-   href tursa, ba'zi joylashtirilgan (embed) muhitlarda havola brauzer tomonidan
-   JS ishlashidan oldin ushlab qolinib, kvizeni chetlab o'tib videoni ochib yuboradi.
-   Faqat kvize oxiridagi "Videoni ko'rish" (#quizFinish) haqiqiy linkka ega bo'ladi. */
-document.querySelectorAll('[data-cta]:not(.js-quiz-trigger)').forEach(function (el) {
-  el.href = CONFIG.videoUrl;
-  if (CONFIG.openInNewTab) {
-    el.target = '_blank';
-    el.rel = 'noopener';
-  }
-  el.addEventListener('click', function () { trackCta(el.dataset.cta); });
-});
-
-/* ---------- 1a. Telefon raqamlari ---------- */
+/* ---------- 1. Telefon raqamlari ---------- */
 document.querySelectorAll('[data-phone]').forEach(function (el) {
   el.href = 'tel:' + CONFIG.phone.replace(/[^\d+]/g, '');
   var slot = el.querySelector('.hdr__tel-txt');
@@ -56,7 +35,7 @@ document.querySelectorAll('[data-phone]').forEach(function (el) {
   el.addEventListener('click', function () { trackCta('phone'); });
 });
 
-/* ---------- 1b. Ijtimoiy tarmoq ikonkalari (header) ---------- */
+/* ---------- 1a. Ijtimoiy tarmoq ikonkalari (header) ---------- */
 document.querySelectorAll('[data-social]').forEach(function (el) {
   var platform = el.dataset.social;
   var url = CONFIG.social[platform];
@@ -151,75 +130,4 @@ if (reduced || !('IntersectionObserver' in window)) {
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
-})();
-
-/* ---------- 5. Kvize oynasi ----------
-   "Videoni ko'rish" tugmasi (teaser blok) videoga to'g'ridan-to'g'ri
-   olib bormaydi — avval shu kvize ochiladi. Barcha 3 savolga javob berilgach,
-   "Videoni ko'rish" tugmasi chiqadi va CONFIG.videoUrl'ni ochadi (backend kerak emas,
-   javoblar hech qayerga yuborilmaydi — bu faqat qiziqishni isituvchi bosqich). */
-(function () {
-  var overlay = document.getElementById('quizOverlay');
-  var card = overlay ? overlay.querySelector('.quiz-card') : null;
-  var closeBtn = document.getElementById('quizClose');
-  var finishBtn = document.getElementById('quizFinish');
-  var hint = document.getElementById('quizHint');
-  var questions = overlay ? overlay.querySelectorAll('.quiz-q') : [];
-  if (!overlay || !card) return;
-
-  function allAnswered() {
-    return Array.prototype.every.call(questions, function (q) {
-      return q.querySelector('.quiz-opt.is-selected');
-    });
-  }
-
-  function updateFinishVisibility() {
-    var done = allAnswered();
-    finishBtn.hidden = !done;
-    hint.hidden = done;
-  }
-
-  function openQuiz() {
-    overlay.hidden = false;
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function () { overlay.classList.add('is-on'); });
-    trackCta('quiz_open');
-  }
-
-  function closeQuiz() {
-    overlay.classList.remove('is-on');
-    document.body.style.overflow = '';
-    setTimeout(function () { overlay.hidden = true; }, 250);
-  }
-
-  document.querySelectorAll('.js-quiz-trigger').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      openQuiz();
-    });
-  });
-
-  closeBtn.addEventListener('click', closeQuiz);
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay) closeQuiz();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !overlay.hidden) closeQuiz();
-  });
-
-  questions.forEach(function (q) {
-    q.querySelectorAll('.quiz-opt').forEach(function (opt) {
-      opt.addEventListener('click', function () {
-        q.querySelectorAll('.quiz-opt').forEach(function (o) { o.classList.remove('is-selected'); });
-        opt.classList.add('is-selected');
-        updateFinishVisibility();
-      });
-    });
-  });
-
-  finishBtn.addEventListener('click', function () {
-    setTimeout(closeQuiz, 150); // href navigatsiyasi ketishga ulguradi, keyin oyna yopiladi
-  });
-
-  updateFinishVisibility();
 })();
