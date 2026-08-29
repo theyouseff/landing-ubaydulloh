@@ -5,7 +5,7 @@
 
 const CONFIG = {
   // 1) YouTube VSL videosi.
-  videoUrl: "https://www.youtube.com/watch?v=oepseejoW4k&t=287s",
+  videoUrl: "https://www.youtube.com/watch?v=5cANPWLKu88&t=0s",
 
   // 2) Sarlavha va pastki paneldagi telefon raqami.
   phone: "+998 95 507 78 87",
