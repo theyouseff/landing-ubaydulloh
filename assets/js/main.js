@@ -281,7 +281,7 @@ if (reduced || !('IntersectionObserver' in window)) {
       loading.classList.remove('is-on');
       document.body.style.overflow = '';
       setTimeout(function () { loading.hidden = true; }, 300);
-    }, 1600);
+    }, 10000);
   });
 
   updateFinishVisibility();
