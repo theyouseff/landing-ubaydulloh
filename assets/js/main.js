@@ -278,3 +278,44 @@ if (reduced || !('IntersectionObserver' in window)) {
 
   updateFinishVisibility();
 })();
+
+/* ---------- 6. Statistika raqamlarini scroll qilinganda animatsiya bilan sanash ---------- */
+(function () {
+  var counters = document.querySelectorAll('.js-count');
+  if (!counters.length) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function formatNumber(n) {
+    // "10 000" kabi bo'sh joy bilan minglik ajratkichi (ru-RU formati shuni beradi)
+    return Math.round(n).toLocaleString('ru-RU');
+  }
+
+  function animateCount(el) {
+    var target = Number(el.dataset.target) || 0;
+    var duration = 1400;
+    var start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out kub
+      el.textContent = formatNumber(target * eased);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = formatNumber(target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    counters.forEach(function (el) { el.textContent = formatNumber(Number(el.dataset.target) || 0); });
+  } else {
+    var countObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        animateCount(entry.target);
+        countObs.unobserve(entry.target); // faqat bir marta ishlasin
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (el) { countObs.observe(el); });
+  }
+})();
