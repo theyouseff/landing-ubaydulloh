@@ -116,24 +116,30 @@ if (reduced || !('IntersectionObserver' in window)) {
   setInterval(tick, 1000);
 })();
 
-/* ---------- 4. Taymer rasm ustidan o'tayotganda qoraya, o'tib bo'lgach oqarib qaytadi ----------
+/* ---------- 4. Taymer och fonli bloklar ustidan o'tayotganda qoraya, o'tib bo'lgach oqarib qaytadi ----------
    .offer-timer fixed turgani uchun ekranda joyi o'zgarmaydi — sahifa scroll qilinganda
-   .pain-photo rasmi UNING OSTIDAN o'tadi. Ikkalasining ekrandagi to'rtburchagi
-   kesishganda "is-dark" klassi qo'shiladi, kesishish tugasa olib tashlanadi.
+   .pain-photo rasmi va .stats-card (statistika bloki, ikkalasi ham och fonli)
+   UNING OSTIDAN o'tadi. Taymer ular bilan qanday fonda bo'lsa ham ko'rinishi uchun
+   (och fonli blok ustida taymerning o'zi ham och bo'lsa yo'qolib qoladi) — ulardan
+   BIRI bilan kesishganda "is-dark" klassi qo'shiladi, kesishish tugasa olib tashlanadi.
    'scroll' hodisasiga emas, har freymga tekshiruvga tayanadi — shunda iOS'dagi
    inersiyali scroll paytida ham rang almashinishi kechikmaydi. */
 (function () {
   var timer = document.querySelector('.offer-timer');
   var photo = document.querySelector('.pain-photo');
-  if (!timer || !photo) return;
+  var statsCard = document.querySelector('.stats-card');
+  if (!timer || (!photo && !statsCard)) return;
 
   function overlaps(a, b) {
     return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
   }
 
   function loop() {
-    var isOver = overlaps(timer.getBoundingClientRect(), photo.getBoundingClientRect());
-    timer.classList.toggle('is-dark', isOver);
+    var timerRect = timer.getBoundingClientRect();
+    var isOver =
+      (photo && overlaps(timerRect, photo.getBoundingClientRect())) ||
+      (statsCard && overlaps(timerRect, statsCard.getBoundingClientRect()));
+    timer.classList.toggle('is-dark', !!isOver);
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
