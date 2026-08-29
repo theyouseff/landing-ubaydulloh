@@ -264,13 +264,13 @@ p{margin:0;}
   display:grid;place-items:center;color:#fff;
   background:rgba(255,255,255,.08);border:1px solid var(--line);
 }
-.quiz-eyebrow{
-  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent-2);margin-bottom:10px;
-}
 .quiz-title{
   font-family:var(--ff-display);font-weight:700;font-size:clamp(22px,5.5vw,28px);
-  margin-bottom:26px;padding-right:30px;
+  margin-bottom:8px;padding-right:30px;
+}
+.quiz-subtitle{
+  font-family:var(--ff-text);font-weight:400;font-size:15px;
+  color:#B9BAC4;margin-bottom:26px;
 }
 .quiz-q{margin-bottom:24px;}
 .quiz-q__label{font-size:14.5px;color:#B9BAC4;margin-bottom:12px;line-height:1.4;}
