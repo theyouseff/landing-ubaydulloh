@@ -177,13 +177,15 @@ if (reduced || !('IntersectionObserver' in window)) {
     var input = q.querySelector('.quiz-input');
     if (input) {
       if (input.id === 'quizPhone') {
-        // Shunchaki "kamida 9 raqam" kifoya emas edi — "9989012345" (10 ta
-        // raqam, oxirgi 2 tasi yetishmayapti) ham noto'g'ri o'tib ketardi.
-        // O'zbek raqami: mamlakat kodisiz 9 ta raqam (901234567) YOKI
-        // "998" bilan birga aniq 12 ta raqam (998901234567) — boshqa
-        // uzunlikning barchasi to'liqsiz hisoblanadi.
+        // "digits===9 YOKI digits===12" qoidasi ham yetarli emas edi:
+        // "+998903456" — 9 ta raqam ("998"+6 ta), lekin "998" bilan
+        // BOSHLANGANI uchun aslida to'liqsiz 998-kodli raqam, shunchaki
+        // tasodifan uzunligi 9ga teng bo'lib qolgan. Shu sababli avval
+        // "998" bilan boshlanish-boshlanmasligini aniqlab, keyin SHU
+        // holatga mos aniq uzunlikni talab qilamiz.
         var digits = input.value.replace(/\D/g, '');
-        return digits.length === 9 || digits.length === 12;
+        if (digits.slice(0, 3) === '998') return digits.length === 12;
+        return digits.length === 9;
       }
       return input.value.trim().length > 0;
     }
