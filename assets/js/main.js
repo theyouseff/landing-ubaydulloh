@@ -87,9 +87,8 @@ if (reduced || !('IntersectionObserver' in window)) {
 }
 
 /* ---------- 3. "Video 8 soatdan keyin ochib ketadi" taymeri ----------
-   Har mehmon o'zining shaxsiy 8 soatini ko'radi: birinchi tashrifda hisoblagich
-   boshlanadi va localStorage'da saqlanadi. Sahifa yopib qayta ochilsa ham,
-   shu 8 soat davomida qayerda to'xtagan bo'lsa — o'sha yerdan davom etadi. */
+   Saqlanmaydi — sahifaga har safar (yangidan) kirilganda taymer 8 soatdan
+   qaytadan boshlanadi (localStorage ishlatilmaydi). */
 (function () {
   var box = document.querySelector('.offer-timer');
   if (!box) return;
@@ -98,19 +97,7 @@ if (reduced || !('IntersectionObserver' in window)) {
   var mEl = box.querySelector('[data-timer="m"]');
   var sEl = box.querySelector('[data-timer="s"]');
   var DURATION = 8 * 60 * 60 * 1000;
-  var STORAGE_KEY = 'offerTimerEnd';
-  var end;
-
-  try {
-    var saved = Number(localStorage.getItem(STORAGE_KEY));
-    // saqlangan vaqt hali tugamagan VA yangi DURATION'dan oshib ketmagan bo'lsa — davom ettiramiz.
-    // (Ikkinchi shart: DURATION keyinchalik qisqartirilsa, eski uzoqroq muddat "yopishib qolmasin".)
-    var valid = saved && saved > Date.now() && (saved - Date.now()) <= DURATION;
-    end = valid ? saved : Date.now() + DURATION;
-    localStorage.setItem(STORAGE_KEY, String(end));
-  } catch (e) {
-    end = Date.now() + DURATION; // localStorage yopiq bo'lsa ham taymer ishlayveradi
-  }
+  var end = Date.now() + DURATION;
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -118,7 +105,6 @@ if (reduced || !('IntersectionObserver' in window)) {
     var left = end - Date.now();
     if (left <= 0) {
       end = Date.now() + DURATION;
-      try { localStorage.setItem(STORAGE_KEY, String(end)); } catch (e) { /* jim o'tadi */ }
       left = DURATION;
     }
     hEl.textContent = pad(Math.floor(left / 3600000));

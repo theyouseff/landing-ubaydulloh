@@ -107,9 +107,8 @@ yuborish kerak bo'ladi — bu qadam hali qo'shilmagan.
 Sahifa matn oqimida emas — **butun saytda doim ko'rinadigan floating karta**,
 o'ng pastki burchakka qadalgan, barcha ekran o'lchamlarida bir xil joyda turadi.
 
-Statik rasm emas — **haqiqiy hisoblanadi**. Har mehmon birinchi tashrifida o'zining
-shaxsiy 8 soatini oladi (`localStorage`), sahifani yopib qayta ochsa ham o'sha
-joydan davom etadi. Muddat tugasa, keyingi tashrifda yana 8 soatga qayta boshlanadi.
+Statik rasm emas — **haqiqiy hisoblanadi**. Saqlanmaydi — sahifaga har safar
+(yangidan) kirilganda taymer 8 soatdan qaytadan boshlanadi.
 
 Vaqtni o'zgartirish: `assets/js/main.js` dagi `DURATION` o'zgaruvchisi
 (3-bo'limda) — `8 * 60 * 60 * 1000` millisekund.
