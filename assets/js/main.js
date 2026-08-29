@@ -175,7 +175,16 @@ if (reduced || !('IntersectionObserver' in window)) {
 
   function isQuestionAnswered(q) {
     var input = q.querySelector('.quiz-input');
-    if (input) return input.value.trim().length > 0;
+    if (input) {
+      if (input.id === 'quizPhone') {
+        // Faqat bo'sh emasligi kifoya emas — "+998" kabi to'liqsiz raqam ham
+        // "javob berildi" deb hisoblanib qolar edi. Raqamlarni sanab, real
+        // telefon raqamiga o'xshash uzunlikda (kamida 9 ta raqam) bo'lishini
+        // talab qilamiz.
+        return input.value.replace(/\D/g, '').length >= 9;
+      }
+      return input.value.trim().length > 0;
+    }
     return !!q.querySelector('.quiz-opt.is-selected');
   }
 
