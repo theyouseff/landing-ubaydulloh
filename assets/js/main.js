@@ -18,7 +18,11 @@ const CONFIG = {
     telegram: "https://t.me/drubaydulloh_implant/35",
     instagram: "https://www.instagram.com/dr.ubaydull0h/",
     youtube: "https://www.youtube.com/@DrUbaydulloh"
-  }
+  },
+
+  // 5) Kvize (anketa) javoblari shu Google Apps Script "Web app" manziliga
+  //    yuboriladi — u yerdan Google Sheets'ga qator bo'lib tushadi.
+  sheetsUrl: "https://script.google.com/macros/s/AKfycbxdVf7XKkQBqipFXbgj6p2H7_2AxxuNajOknCJIeE5YWiLkQlsV8P17siFbFH1i8Gve/exec"
 };
 
 /* -------------------------------------------------------------------------- */
@@ -244,25 +248,49 @@ if (reduced || !('IntersectionObserver' in window)) {
      avval qisqa "Video yuklanmoqda" oynasini ko'rsatamiz, keyin video ochiladi. */
   var loading = document.getElementById('quizLoading');
 
+  /* Anketa javoblarini (joylashuv, ism, telefon) Google Sheets'ga yuborish.
+     CONFIG.sheetsUrl — Google Apps Script "Web app" manzili (mijoz o'zi
+     deploy qilgan). 'no-cors' + 'text/plain' ataylab shunday: aks holda
+     brauzer avval CORS "preflight" so'rovi yuboradi, Apps Script esa uni
+     to'g'ri qayta ishlamaydi va so'rov butunlay muvaffaqiyatsiz tugaydi.
+     Javobni o'qiy olmaymiz (bu normal) — faqat yuborib qo'yamiz, natija
+     videoni ochilishiga hech qanday ta'sir qilmaydi. */
+  function sendLead() {
+    if (!CONFIG.sheetsUrl) return;
+    var locOpt = questions[0] ? questions[0].querySelector('.quiz-opt.is-selected') : null;
+    var nameEl = document.getElementById('quizName');
+    var phoneEl = document.getElementById('quizPhone');
+    var payload = {
+      location: locOpt ? locOpt.textContent.trim() : '',
+      name: nameEl ? nameEl.value.trim() : '',
+      phone: phoneEl ? phoneEl.value.trim() : ''
+    };
+    try {
+      fetch(CONFIG.sheetsUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) { /* lead yuborilmasa ham video ochilishiga xalaqit bermasin */ }
+  }
+
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
+    sendLead();
     var url = finishBtn.href;
-
-    /* MUHIM: brauzerlar (ayniqsa Safari/iPhone) setTimeout ichidan chaqirilgan
-       window.open()ni "foydalanuvchi so'ramagan popup" deb bloklaydi — chunki
-       u endi bosishning "to'g'ridan-to'g'ri natijasi" hisoblanmaydi. Shu sabab
-       video kechikishdan keyin OCHILMAY qolayotgan edi. Yechim: yangi tabni
-       HOZIROQ, bosish paytida (bo'sh holda) ochamiz — bu hali ruxsat etiladi —
-       keyin kechikish tugagach shu tabning manzilini almashtiramiz (bu esa
-       popup-bloker qoidasiga umuman tegishli emas). */
-    var newTab = CONFIG.openInNewTab ? window.open('', '_blank') : null;
-
     closeQuiz();
-    if (!loading) {
-      if (CONFIG.openInNewTab) { if (newTab) newTab.location.href = url; else window.open(url, '_blank', 'noopener'); }
-      else location.href = url;
-      return;
-    }
+
+    /* MUHIM: yangi tab OCHILMAYDI (avval "window.open('', '_blank')" bilan
+       oldindan ochib qo'yilgan edi — bu popup-blokerni chetlab o'tsa ham,
+       telefon brauzerlari (Android/iPhone) yangi tab ochilgan zahoti undan
+       DARHOL o'sha (hali bo'sh) tabga o'tkazib yuboradi, natijada "Video
+       yuklanmoqda" oynasi eski tabda qolib ketib UMUMAN ko'rinmay qolardi).
+       Endi video xuddi SHU tabning o'zida ochiladi — loading oynasi to'liq
+       ko'rinadi, kechikish tugagach video shu joyning o'zida ochiladi.
+       Bonus: bu popup-bloker muammosiga ham umuman tegishli emas, chunki
+       yangi oyna/tab umuman ochilmaydi. */
+    if (!loading) { location.href = url; return; }
 
     loading.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -270,15 +298,7 @@ if (reduced || !('IntersectionObserver' in window)) {
     loading.classList.add('is-on');
 
     setTimeout(function () {
-      if (CONFIG.openInNewTab) {
-        if (newTab && !newTab.closed) newTab.location.href = url;
-        else window.open(url, '_blank', 'noopener'); // zaxira: tab blokланган/yopilgan bo'lsa
-      } else {
-        location.href = url;
-      }
-      loading.classList.remove('is-on');
-      document.body.style.overflow = '';
-      setTimeout(function () { loading.hidden = true; }, 300);
+      location.href = url;
     }, 3500);
   });
 
