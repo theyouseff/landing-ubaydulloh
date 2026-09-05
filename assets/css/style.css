@@ -121,7 +121,7 @@ p{margin:0;}
 }
 
 /* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;padding-top:112px;padding-bottom:clamp(64px,12vw,110px);}
+.hero{position:relative;overflow:hidden;padding-top:112px;padding-bottom:clamp(28px,6vw,64px);}
 /* Keyingi bo'limning yuqoridagi ko'k nuri bilan tutashishi uchun — xuddi shu nurning
    pastki chetdagi aksi. Ikkalasi bir xil nuqtada bir xil intensivlikda uchrashadi,
    shu bilan bo'limlar orasidagi qattiq chiziq yo'qoladi. */
