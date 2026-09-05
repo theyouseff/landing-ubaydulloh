@@ -277,6 +277,26 @@ if (reduced || !('IntersectionObserver' in window)) {
     } catch (e) { /* lead yuborilmasa ham video ochilishiga xalaqit bermasin */ }
   }
 
+  /* t.me havolasi brauzerda ochilsa, Telegram odatda o'zining "bu botni
+     ochish uchun Start bosing" sahifasini ko'rsatadi. Agar telefonda
+     Telegram ilovasi o'rnatilgan bo'lsa, tg:// sxemasi orqali to'g'ridan-
+     to'g'ri ilovaning o'ziga o'tish mumkin — shu sahifani chetlab o'tadi.
+     Agar ilova ochilmasa (o'rnatilmagan yoki komp'yuter), sahifa "hidden"
+     bo'lib qolmaydi — shunda oddiy https havolaga qaytamiz. */
+  function goToDestination(url) {
+    var m = /^https:\/\/t\.me\/([^/?]+)(?:\?start=(.+))?$/.exec(url);
+    if (!m) { location.href = url; return; }
+    var tgUrl = 'tg://resolve?domain=' + m[1] + (m[2] ? '&start=' + m[2] : '');
+    var timer = setTimeout(function () { location.href = url; }, 1200);
+    document.addEventListener('visibilitychange', function onHide() {
+      if (document.hidden) {
+        clearTimeout(timer);
+        document.removeEventListener('visibilitychange', onHide);
+      }
+    });
+    location.href = tgUrl;
+  }
+
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
     sendLead();
@@ -292,7 +312,7 @@ if (reduced || !('IntersectionObserver' in window)) {
        ko'rinadi, kechikish tugagach video shu joyning o'zida ochiladi.
        Bonus: bu popup-bloker muammosiga ham umuman tegishli emas, chunki
        yangi oyna/tab umuman ochilmaydi. */
-    if (!loading) { location.href = url; return; }
+    if (!loading) { goToDestination(url); return; }
 
     loading.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -300,7 +320,7 @@ if (reduced || !('IntersectionObserver' in window)) {
     loading.classList.add('is-on');
 
     setTimeout(function () {
-      location.href = url;
+      goToDestination(url);
     }, 3500);
   });
 
