@@ -162,6 +162,9 @@ p{margin:0;}
   padding-top:clamp(28px,6vw,64px); /* .sec--pain'ning o'z pastki bo'shlig'i bilan
     qo'shilib ketmasin — ikkalovi ham to'liq --sec-y olsa, rasm bilan keyingi
     sarlavha orasida haddan tashqari katta oraliq hosil bo'lardi */
+  padding-bottom:clamp(28px,6vw,64px); /* xuddi shu sabab: .sec--stats o'zining
+    padding-top:0 bilan tor turibdi, shuning uchun bu yerdagi bo'shliq
+    tugma bilan statistika bloki orasidagi YAGONA oraliq bo'ladi */
 }
 
 .teaser-list{
