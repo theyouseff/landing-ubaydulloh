@@ -146,8 +146,11 @@ p{margin:0;}
 }
 
 /* ---------- pain (rasm) ---------- */
-.sec--pain{background:
-  radial-gradient(120% 60% at 50% 0%, rgba(42,75,232,.10), transparent 70%);}
+.sec--pain{
+  padding-top:0; /* .hero'ning o'zi pastida yetarli bo'shliq beradi — ikkalovi qo'shilib
+                    rasm bilan matn orasida haddan tashqari katta oraliq hosil qilmasin */
+  background:radial-gradient(120% 60% at 50% 0%, rgba(42,75,232,.10), transparent 70%);
+}
 .pain-photo{
   width:100%;border-radius:var(--r);border:1px solid var(--line);
   display:block;
