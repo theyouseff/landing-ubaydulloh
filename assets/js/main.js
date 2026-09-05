@@ -37,12 +37,14 @@ function trackCta(place) {
 }
 
 /* ---------- 1. CTA tugmasini videoga bog'lash ----------
-   MUHIM: .js-quiz-trigger tugmaga (teaser blok) haqiqiy videoUrl href
-   sifatida QO'YILMAYDI — u avval kvize oynasini ochishi kerak. Agar cross-origin
-   href tursa, ba'zi joylashtirilgan (embed) muhitlarda havola brauzer tomonidan
-   JS ishlashidan oldin ushlab qolinib, kvizeni chetlab o'tib videoni ochib yuboradi.
-   Faqat kvize oxiridagi "Videoni ko'rish" (#quizFinish) haqiqiy linkka ega bo'ladi. */
-document.querySelectorAll('[data-cta]:not(.js-quiz-trigger)').forEach(function (el) {
+   MUHIM: .js-quiz-trigger (teaser tugma) va #quizFinish (kvize oxiridagi
+   tugma) haqiqiy videoUrl href sifatida OLMAYDI — ikkalasi ham avval o'z JS
+   mantig'ini ishga tushirishi kerak (mos ravishda: kvizeni ochish / yuklanish
+   oynasini ko'rsatib, keyin kechiktirib o'tish). Agar cross-origin href
+   boshidanoq tursa, ba'zi joylashtirilgan (embed) muhitlar (masalan, Claude
+   Artifact preview) havolani JS ishlashidan OLDIN ushlab qolib, kutilgan
+   oyna/animatsiyani chetlab o'tib to'g'ridan-to'g'ri o'tkazib yuboradi. */
+document.querySelectorAll('[data-cta]:not(.js-quiz-trigger):not(#quizFinish)').forEach(function (el) {
   el.href = CONFIG.videoUrl;
   if (CONFIG.openInNewTab) {
     el.target = '_blank';
@@ -278,7 +280,7 @@ if (reduced || !('IntersectionObserver' in window)) {
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
     sendLead();
-    var url = finishBtn.href;
+    var url = CONFIG.videoUrl; // finishBtn.href emas — u atayin href="#" holida qoldirilgan
     closeQuiz();
 
     /* MUHIM: yangi tab OCHILMAYDI (avval "window.open('', '_blank')" bilan
