@@ -147,14 +147,21 @@ p{margin:0;}
 
 /* ---------- pain (rasm) ---------- */
 .sec--pain{
-  padding-top:0; /* .hero'ning o'zi pastida yetarli bo'shliq beradi — ikkalovi qo'shilib
-                    rasm bilan matn orasida haddan tashqari katta oraliq hosil qilmasin */
+  padding-top:0; padding-bottom:0; /* qo'shni bo'limlarning o'z bo'shlig'i bilan
+    qo'shilib, haddan tashqari katta oraliq hosil qilmasin — oraliqni faqat
+    o'sha qo'shni bo'lim (.hero, .sec--tease) o'zi beradi */
   background:radial-gradient(120% 60% at 50% 0%, rgba(42,75,232,.10), transparent 70%);
 }
 .pain-photo{
   width:100%;border-radius:var(--r);border:1px solid var(--line);
   display:block;
   box-shadow:0 0 64px 6px rgba(42,75,232,.28), 0 22px 50px -22px rgba(0,0,0,.6);
+}
+
+.sec--tease{
+  padding-top:clamp(28px,6vw,64px); /* .sec--pain'ning o'z pastki bo'shlig'i bilan
+    qo'shilib ketmasin — ikkalovi ham to'liq --sec-y olsa, rasm bilan keyingi
+    sarlavha orasida haddan tashqari katta oraliq hosil bo'lardi */
 }
 
 .teaser-list{
