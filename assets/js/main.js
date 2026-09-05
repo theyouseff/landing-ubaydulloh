@@ -4,8 +4,8 @@
    ========================================================================== */
 
 const CONFIG = {
-  // 1) YouTube VSL videosi.
-  videoUrl: "https://www.youtube.com/watch?v=5cANPWLKu88&t=0s",
+  // 1) Anketa tugagach o'tiladigan manzil (hozir: Telegram bot).
+  videoUrl: "https://t.me/drUbaydullohAbdulatif_bot?start=1",
 
   // 2) Sarlavha va pastki paneldagi telefon raqami.
   phone: "+998 95 507 78 87",
