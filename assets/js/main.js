@@ -22,7 +22,7 @@ const CONFIG = {
 
   // 5) Kvize (anketa) javoblari shu Google Apps Script "Web app" manziliga
   //    yuboriladi — u yerdan Google Sheets'ga qator bo'lib tushadi.
-  sheetsUrl: "https://script.google.com/macros/s/AKfycbxdVf7XKkQBqipFXbgj6p2H7_2AxxuNajOknCJIeE5YWiLkQlsV8P17siFbFH1i8Gve/exec"
+  sheetsUrl: "https://script.google.com/macros/s/AKfycbxSylIebYw7XG_uPvd_lvLwBK-IoIOYPhOXgCRqC17xwQs6O7T02Ca1Pd9XaM4LYTvY/exec"
 };
 
 /* -------------------------------------------------------------------------- */
