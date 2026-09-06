@@ -297,31 +297,47 @@ if (reduced || !('IntersectionObserver' in window)) {
     location.href = tgUrl;
   }
 
+  /* Yuklanish tugagach — to'g'ridan-to'g'ri havolaga otqazmaymiz, avval
+     "Telegramga o'tish" tugmali oynani ko'rsatamiz. Havola FAQAT o'sha tugma
+     bosilganda ochiladi (bu foydalanuvchi harakati — telefon brauzerlari
+     tg:// yoki yangi havolani shundagina ishonchli ochadi, avtomatik
+     redirectni esa ko'pincha bloklaydi). */
+  var ctaGate = document.getElementById('ctaGate');
+  var ctaGateBtn = document.getElementById('ctaGateBtn');
+
+  function showCtaGate() {
+    if (loading) { loading.classList.remove('is-on'); loading.hidden = true; }
+    if (!ctaGate) { goToDestination(CONFIG.videoUrl); return; }
+    ctaGate.hidden = false;
+    document.body.style.overflow = 'hidden';
+    void ctaGate.offsetHeight; // majburiy reflow — fade-in doim ishlashi uchun
+    ctaGate.classList.add('is-on');
+    trackCta('cta_gate_shown');
+  }
+
+  if (ctaGateBtn) {
+    ctaGateBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      trackCta('cta_gate');
+      goToDestination(CONFIG.videoUrl);
+    });
+  }
+
   finishBtn.addEventListener('click', function (e) {
-    e.preventDefault(); // videoni o'zimiz, kechiktirib ochamiz
+    e.preventDefault(); // havolani o'zimiz, tugma orqali ochamiz
     sendLead();
-    var url = CONFIG.videoUrl; // finishBtn.href emas — u atayin href="#" holida qoldirilgan
     closeQuiz();
 
-    /* MUHIM: yangi tab OCHILMAYDI (avval "window.open('', '_blank')" bilan
-       oldindan ochib qo'yilgan edi — bu popup-blokerni chetlab o'tsa ham,
-       telefon brauzerlari (Android/iPhone) yangi tab ochilgan zahoti undan
-       DARHOL o'sha (hali bo'sh) tabga o'tkazib yuboradi, natijada "Video
-       yuklanmoqda" oynasi eski tabda qolib ketib UMUMAN ko'rinmay qolardi).
-       Endi video xuddi SHU tabning o'zida ochiladi — loading oynasi to'liq
-       ko'rinadi, kechikish tugagach video shu joyning o'zida ochiladi.
-       Bonus: bu popup-bloker muammosiga ham umuman tegishli emas, chunki
-       yangi oyna/tab umuman ochilmaydi. */
-    if (!loading) { goToDestination(url); return; }
+    /* MUHIM: yangi tab OCHILMAYDI. Loading oynasi xuddi shu tabda ko'rinadi,
+       kechikish tugagach "Telegramga o'tish" oynasi chiqadi. */
+    if (!loading) { showCtaGate(); return; }
 
     loading.hidden = false;
     document.body.style.overflow = 'hidden';
     void loading.offsetHeight; // majburiy reflow — fade-in doim ishga tushishi uchun
     loading.classList.add('is-on');
 
-    setTimeout(function () {
-      goToDestination(url);
-    }, 3500);
+    setTimeout(showCtaGate, 3500);
   });
 
   updateFinishVisibility();
