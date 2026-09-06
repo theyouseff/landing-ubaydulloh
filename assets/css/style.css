@@ -396,31 +396,35 @@ p{margin:0;}
   position:fixed;inset:0;z-index:115;
   display:flex;align-items:center;justify-content:center;
   padding:24px;
-  background:radial-gradient(120% 120% at 50% 18%, #1a3379 0%, #0A0A0B 72%);
+  background:radial-gradient(100% 85% at 50% 42%, #26429e 0%, #0A0A0B 70%);
   opacity:0;transition:opacity .3s ease;
 }
 .cta-gate[hidden]{display:none;} /* [hidden]'ni display:flex bosib ketmasligi uchun */
 .cta-gate.is-on{opacity:1;}
 .cta-gate__card{
+  position:relative;
   width:100%;max-width:420px;
-  background:#F4F5F8;color:#111214;
+  background:linear-gradient(165deg, #2947d4 0%, #16278d 100%);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.16);
   border-radius:24px;
   padding:clamp(28px,7vw,38px) clamp(22px,6vw,30px) clamp(24px,6vw,30px);
   text-align:center;
-  box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+  /* orqadagi ko'k yorug'lik + yumshoq qora soya */
+  box-shadow:0 0 100px 8px rgba(56,96,255,.6), 0 30px 80px -20px rgba(0,0,0,.55);
   transform:translateY(16px);transition:transform .35s ease;
 }
 .cta-gate.is-on .cta-gate__card{transform:none;}
 .cta-gate__title{
   font-family:var(--ff-display);font-weight:700;
-  font-size:clamp(23px,6vw,30px);color:#15161A;line-height:1.15;
+  font-size:clamp(23px,6vw,30px);color:#fff;line-height:1.15;
   margin-bottom:14px;
 }
 .cta-gate__text{
-  font-size:15.5px;line-height:1.5;color:#3A3B42;margin-bottom:10px;
+  font-size:15.5px;line-height:1.5;color:#E5EAFF;margin-bottom:10px;
 }
 .cta-gate__sub{
-  font-size:13.5px;line-height:1.5;color:#6B6C75;
+  font-size:13.5px;line-height:1.5;color:#B7C3F3;
 }
 .cta-gate__arrows{
   width:min(70%,190px);margin:14px auto 16px;
