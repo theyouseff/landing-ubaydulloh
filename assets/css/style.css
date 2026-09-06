@@ -435,16 +435,16 @@ p{margin:0;}
   padding:17px 20px;border-radius:100px;
   font-family:var(--ff-display);font-weight:700;
   font-size:clamp(15px,4.2vw,17px);letter-spacing:.03em;text-transform:uppercase;
-  color:#fff;background:#2FA8DD;
-  box-shadow:0 6px 0 #1C7BA6, 0 16px 26px -8px rgba(47,168,221,.55);
+  color:#fff;background:var(--accent-btn); /* to'q ko'k — sahifadagi asosiy tugma bilan bir xil */
+  box-shadow:0 6px 0 #081C9E, 0 16px 30px -6px rgba(12,40,223,.6);
   transition:transform .12s ease, box-shadow .12s ease, background-color .2s ease;
 }
 .cta-gate__btn:active{
   transform:translateY(4px);
-  box-shadow:0 2px 0 #1C7BA6, 0 8px 16px -8px rgba(47,168,221,.55);
+  box-shadow:0 2px 0 #081C9E, 0 8px 18px -6px rgba(12,40,223,.6);
 }
 @media (hover:hover){
-  .cta-gate__btn:hover{background:#37B4EC;}
+  .cta-gate__btn:hover{background:var(--accent-btn-hi);}
 }
 @media (prefers-reduced-motion:reduce){
   .cta-gate,.cta-gate__card{transition:none;}
