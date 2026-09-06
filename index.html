@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=33">
+<link rel="stylesheet" href="assets/css/style.css?v=34">
 
 <!-- ===== ANALYTICS SLOT =====
      Reklama ishga tushganda Meta Pixel / Google Analytics kodini shu yerga qo'ying.
@@ -221,6 +221,34 @@
   <div class="quiz-loading__bar"><div class="quiz-loading__bar-fill"></div></div>
 </div>
 
-<script src="assets/js/main.js?v=33"></script>
+<!-- ========== TELEGRAMGA O'TISH OYNASI (yuklanish tugagach ko'rsatiladi, tugma bosilgach havolaga o'tadi) ========== -->
+<div class="cta-gate" id="ctaGate" hidden>
+  <div class="cta-gate__card" role="dialog" aria-modal="true" aria-labelledby="ctaGateTitle">
+    <h3 class="cta-gate__title" id="ctaGateTitle">Oxirgi qadam qoldi!</h3>
+    <p class="cta-gate__text">BEPUL darslikni ko'rish uchun quyidagi tugmani bosib Telegram botga o'ting.</p>
+    <p class="cta-gate__sub">Bot sizga dars uchun havola yuboradi.</p>
+
+    <div class="cta-gate__arrows" aria-hidden="true">
+      <svg viewBox="0 0 240 84" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <g stroke="#2FA8DD" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M45 7C40 30 33 46 27 71"/>
+          <path d="M16 58 27 73 40 61"/>
+          <path d="M83 6C80 29 76 47 72 70"/>
+          <path d="M61 57 72 72 85 60"/>
+          <path d="M120 5C120 28 120 48 120 70"/>
+          <path d="M109 57 120 72 131 57"/>
+          <path d="M157 6C160 29 164 47 168 70"/>
+          <path d="M155 60 168 72 179 57"/>
+          <path d="M195 7C200 30 207 46 213 71"/>
+          <path d="M200 61 213 73 224 61"/>
+        </g>
+      </svg>
+    </div>
+
+    <a class="cta-gate__btn" id="ctaGateBtn" href="#">Telegramga o'tish</a>
+  </div>
+</div>
+
+<script src="assets/js/main.js?v=34"></script>
 </body>
 </html>
