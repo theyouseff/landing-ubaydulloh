@@ -391,6 +391,63 @@ p{margin:0;}
   .quiz-loading__bar-fill{transition:none;}
 }
 
+/* ---------- Telegramga o'tish oynasi (yuklanishdan keyin) ---------- */
+.cta-gate{
+  position:fixed;inset:0;z-index:115;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:radial-gradient(120% 120% at 50% 18%, #1a3379 0%, #0A0A0B 72%);
+  opacity:0;transition:opacity .3s ease;
+}
+.cta-gate[hidden]{display:none;} /* [hidden]'ni display:flex bosib ketmasligi uchun */
+.cta-gate.is-on{opacity:1;}
+.cta-gate__card{
+  width:100%;max-width:420px;
+  background:#F4F5F8;color:#111214;
+  border-radius:24px;
+  padding:clamp(28px,7vw,38px) clamp(22px,6vw,30px) clamp(24px,6vw,30px);
+  text-align:center;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+  transform:translateY(16px);transition:transform .35s ease;
+}
+.cta-gate.is-on .cta-gate__card{transform:none;}
+.cta-gate__title{
+  font-family:var(--ff-display);font-weight:700;
+  font-size:clamp(23px,6vw,30px);color:#15161A;line-height:1.15;
+  margin-bottom:14px;
+}
+.cta-gate__text{
+  font-size:15.5px;line-height:1.5;color:#3A3B42;margin-bottom:10px;
+}
+.cta-gate__sub{
+  font-size:13.5px;line-height:1.5;color:#6B6C75;
+}
+.cta-gate__arrows{
+  width:min(70%,190px);margin:14px auto 16px;
+}
+.cta-gate__arrows svg{width:100%;height:auto;display:block;}
+.cta-gate__btn{
+  display:block;width:100%;
+  padding:17px 20px;border-radius:100px;
+  font-family:var(--ff-display);font-weight:700;
+  font-size:clamp(15px,4.2vw,17px);letter-spacing:.03em;text-transform:uppercase;
+  color:#fff;background:#2FA8DD;
+  box-shadow:0 6px 0 #1C7BA6, 0 16px 26px -8px rgba(47,168,221,.55);
+  transition:transform .12s ease, box-shadow .12s ease, background-color .2s ease;
+}
+.cta-gate__btn:active{
+  transform:translateY(4px);
+  box-shadow:0 2px 0 #1C7BA6, 0 8px 16px -8px rgba(47,168,221,.55);
+}
+@media (hover:hover){
+  .cta-gate__btn:hover{background:#37B4EC;}
+}
+@media (prefers-reduced-motion:reduce){
+  .cta-gate,.cta-gate__card{transition:none;}
+  .cta-gate__card{transform:none;}
+  .cta-gate__btn{transition:none;}
+}
+
 /* ---------- reveal ---------- */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
 .reveal.is-in{opacity:1;transform:none;}
