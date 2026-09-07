@@ -136,6 +136,23 @@ p{margin:0;}
   z-index:1;opacity:.55;pointer-events:none;
 }
 @media (min-width:900px){.waves{opacity:.9;}}
+/* Sarlavha ustidagi qadalgan (pill) yorliq — doim BITTA qatorda, shu sabab matn
+   o'lchami white-space:nowrap bilan birga vw asosida kichrayadi, hech qachon
+   o'ralib ketmaydi. */
+.hero__badge{
+  display:inline-flex;max-width:100%;margin-bottom:22px;
+  padding:clamp(7px,2.1vw,15px) clamp(10px,3vw,26px);
+  border-radius:100px;border:1px solid rgba(78,107,255,.5);
+  background:rgba(15,17,28,.55);
+  box-shadow:0 0 26px 2px rgba(42,75,232,.35), inset 0 0 16px rgba(42,75,232,.14);
+  backdrop-filter:blur(6px);
+}
+.hero__badge p{
+  margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-family:var(--ff-display);font-weight:700;text-transform:uppercase;
+  letter-spacing:0;color:var(--accent-2);
+  font-size:clamp(7px,2.3vw,15px);
+}
 /* 4 qatorli BOSH HARFLI sarlavha — kichikroq kegl, tig'izroq tracking */
 .hero__h1{font-size:clamp(31px,8.8vw,64px);font-weight:600;margin-bottom:22px;
   line-height:1.06;letter-spacing:-.01em;}
