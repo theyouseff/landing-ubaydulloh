@@ -130,7 +130,7 @@ p{margin:0;}
   background:radial-gradient(120% 60% at 50% 100%, rgba(42,75,232,.10), transparent 70%);
   pointer-events:none;
 }
-.hero__in{position:relative;z-index:2;}
+.hero__in{position:relative;z-index:2;text-align:center;}
 .waves{
   position:absolute;top:-4%;left:-10%;width:130%;height:min(105%,760px);
   z-index:1;opacity:.55;pointer-events:none;
@@ -139,7 +139,7 @@ p{margin:0;}
 /* 4 qatorli BOSH HARFLI sarlavha — kichikroq kegl, tig'izroq tracking */
 .hero__h1{font-size:clamp(31px,8.8vw,64px);font-weight:600;margin-bottom:22px;
   line-height:1.06;letter-spacing:-.01em;}
-.hero__sub{max-width:34ch;color:#C7C7CE;font-size:clamp(15px,4vw,18px);}
+.hero__sub{max-width:34ch;margin-inline:auto;color:#C7C7CE;font-size:clamp(15px,4vw,18px);}
 @media (min-width:900px){
   .hero{padding-top:150px;}
   .hero__sub{max-width:44ch;}
