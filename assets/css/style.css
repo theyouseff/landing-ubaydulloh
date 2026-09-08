@@ -156,6 +156,11 @@ p{margin:0;}
 /* 4 qatorli BOSH HARFLI sarlavha — kichikroq kegl, tig'izroq tracking */
 .hero__h1{font-size:clamp(31px,8.8vw,64px);font-weight:600;margin-bottom:22px;
   line-height:1.06;letter-spacing:-.01em;}
+/* Uzun 3 qatorli variant — har bir <br> qatori HAR DOIM bitta qatorda
+   qolishi kerak (o'ralib ketmasin), shu sabab matn o'zi ancha uzun bo'lgani
+   uchun kichikroq, deyarli to'liq vw'ga bog'liq kegl ishlatiladi va
+   white-space:nowrap qo'yiladi — brauzer avtomatik o'rashga urinmasin. */
+.hero__h1--tight{font-size:clamp(13px,4.4vw,55px);white-space:nowrap;}
 .hero__sub{max-width:34ch;margin-inline:auto;color:#C7C7CE;font-size:clamp(15px,4vw,18px);}
 @media (min-width:900px){
   .hero{padding-top:150px;}
