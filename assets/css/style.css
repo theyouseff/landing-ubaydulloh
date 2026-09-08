@@ -154,6 +154,7 @@ p{margin:0;}
   letter-spacing:0;color:var(--text);
   font-size:clamp(7px,2.3vw,15px);
 }
+.hero__badge .badge-hot{color:var(--fire);}
 /* 4 qatorli BOSH HARFLI sarlavha — kichikroq kegl, tig'izroq tracking */
 .hero__h1{font-size:clamp(31px,8.8vw,64px);font-weight:600;margin-bottom:22px;
   line-height:1.06;letter-spacing:-.01em;}
