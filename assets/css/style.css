@@ -12,6 +12,7 @@
   --accent-2:#4E6BFF;
   --accent-btn:#0C28DF;      /* to'qroq, to'yingan ko'k — tugma va taymerdagi "8 soat" urg'usi uchun */
   --accent-btn-hi:#203CF3;   /* tugmaning hover holati */
+  --fire:#FF7A29;            /* "olov" urg'u rangi — hero yorlig'i uchun */
   --text:#FFFFFF;
   --muted:#8E8E96;
 
@@ -142,15 +143,15 @@ p{margin:0;}
 .hero__badge{
   display:inline-flex;max-width:100%;margin-bottom:22px;
   padding:clamp(7px,2.1vw,15px) clamp(10px,3vw,26px);
-  border-radius:100px;border:1px solid rgba(78,107,255,.5);
+  border-radius:100px;border:1px solid rgba(255,122,41,.55);
   background:rgba(15,17,28,.55);
-  box-shadow:0 0 26px 2px rgba(42,75,232,.35), inset 0 0 16px rgba(42,75,232,.14);
+  box-shadow:0 0 26px 3px rgba(255,111,34,.4), inset 0 0 16px rgba(255,140,60,.18);
   backdrop-filter:blur(6px);
 }
 .hero__badge p{
   margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-family:var(--ff-display);font-weight:700;text-transform:uppercase;
-  letter-spacing:0;color:var(--accent-2);
+  letter-spacing:0;color:var(--fire);
   font-size:clamp(7px,2.3vw,15px);
 }
 /* 4 qatorli BOSH HARFLI sarlavha — kichikroq kegl, tig'izroq tracking */
@@ -162,6 +163,10 @@ p{margin:0;}
    white-space:nowrap qo'yiladi — brauzer avtomatik o'rashga urinmasin. */
 .hero__h1--tight{font-size:clamp(13px,4.4vw,55px);white-space:nowrap;}
 .hero__sub{max-width:34ch;margin-inline:auto;color:#C7C7CE;font-size:clamp(15px,4vw,18px);}
+/* Ikki qatorli tor variant — matn <br> bilan ikkiga bo'lingan, har bir qator
+   HAR DOIM bitta qatorda qolishi uchun (h1--tight bilan bir xil mantiq)
+   kichikroq, deyarli vw'ga bog'liq kegl va white-space:nowrap ishlatiladi. */
+.hero__sub.hero__sub--tight{max-width:none;white-space:nowrap;font-size:clamp(10px,3.8vw,18px);}
 @media (min-width:900px){
   .hero{padding-top:150px;}
   .hero__sub{max-width:44ch;}
