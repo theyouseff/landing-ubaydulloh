@@ -18,13 +18,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=55">
+<link rel="stylesheet" href="assets/css/style.css?v=56">
 
 <!-- ===== ANALYTICS SLOT =====
-     Reklama ishga tushganda Meta Pixel / Google Analytics kodini shu yerga qo'ying.
-     main.js dagi trackCta() avtomatik ravishda fbq('track','ViewContent') va
-     gtag('event','cta_click') yuboradi — qo'shimcha sozlash shart emas.
+     Meta Pixel ulandi (ID: 1079373564714496).
+     main.js dagi trackCta() avtomatik ravishda fbq('track','ViewContent') yuboradi
+     (CTA tugmalari, telefon, kvize) — qo'shimcha sozlash shart emas.
+     Google Analytics kerak bo'lsa, gtag kodini shu yerga qo'shish mumkin.
 ====================================== -->
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1079373564714496');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1079373564714496&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -235,6 +254,6 @@
   </div>
 </div>
 
-<script src="assets/js/main.js?v=55"></script>
+<script src="assets/js/main.js?v=56"></script>
 </body>
 </html>
