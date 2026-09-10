@@ -381,6 +381,17 @@ if (reduced || !('IntersectionObserver' in window)) {
 
   finishBtn.addEventListener('click', function (e) {
     e.preventDefault(); // havolani o'zimiz, tugma orqali ochamiz
+
+    /* Himoya: barcha savollar (joylashuv + ism + to'liq telefon) to'ldirilmagan
+       bo'lsa — anketa YUBORILMAYDI va video oynasi ochilmaydi. Tugma odatda
+       shundagacha yashirin turadi, lekin bu tekshiruv har qanday holatda
+       (masalan, maydon keyin tozalansa) yuborilib ketishning oldini oladi. */
+    if (!allAnswered()) {
+      updateFinishVisibility();
+      if (hint) hint.hidden = false;
+      return;
+    }
+
     sendLead();
     closeQuiz();
 
