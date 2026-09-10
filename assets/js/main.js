@@ -151,6 +151,67 @@ if (reduced || !('IntersectionObserver' in window)) {
   requestAnimationFrame(loop);
 })();
 
+/* ---------- 4a. Telefon maydoni: "+998 " prefiksi doim turadi, undan keyin
+   FAQAT 9 ta raqam kiritish mumkin (boshqa belgi yoki ortiqcha raqam yozilmaydi).
+   Kiritilgani "+998 90 123 45 67" ko'rinishida avtomatik bo'shliqlar bilan
+   formatlanadi. Prefiksni o'chirib bo'lmaydi. */
+(function () {
+  var phone = document.getElementById('quizPhone');
+  if (!phone) return;
+  var PREFIX = '+998 ';
+
+  function format(nine) {
+    nine = nine.slice(0, 9);
+    var out = PREFIX;
+    if (nine.length > 0) out += nine.slice(0, 2);
+    if (nine.length > 2) out += ' ' + nine.slice(2, 5);
+    if (nine.length > 5) out += ' ' + nine.slice(5, 7);
+    if (nine.length > 7) out += ' ' + nine.slice(7, 9);
+    return out;
+  }
+
+  /** Maydondagi matndan "+998"dan keyingi 9 tagacha raqamni ajratib oladi. */
+  function nineDigits() {
+    var d = phone.value.replace(/\D/g, '');
+    if (d.indexOf('998') === 0) d = d.slice(3);
+    return d.slice(0, 9);
+  }
+
+  function toEnd() {
+    var n = phone.value.length;
+    try { phone.setSelectionRange(n, n); } catch (e) {}
+  }
+
+  function normalize() {
+    phone.value = format(nineDigits());
+  }
+
+  phone.value = PREFIX;
+
+  phone.addEventListener('focus', function () {
+    if (phone.value.replace(/\D/g, '') === '' || phone.value.replace(/\D/g, '') === '998') {
+      phone.value = format(nineDigits());
+    }
+    setTimeout(toEnd, 0);
+  });
+
+  phone.addEventListener('click', function () {
+    if (phone.selectionStart < PREFIX.length) toEnd();
+  });
+
+  phone.addEventListener('input', normalize);
+
+  phone.addEventListener('keydown', function (e) {
+    if ((e.key === 'Backspace' || e.key === 'Delete') && nineDigits().length === 0) {
+      e.preventDefault();
+    }
+  });
+
+  phone.addEventListener('blur', function () {
+    if (nineDigits().length === 0) phone.value = PREFIX;
+  });
+})();
+
 /* ---------- 5. Kvize oynasi ----------
    "Videoni ko'rish" tugmasi (teaser blok) videoga to'g'ridan-to'g'ri
    olib bormaydi — avval shu kvize ochiladi: 1) joylashuv (tugma variantlar),
@@ -175,15 +236,10 @@ if (reduced || !('IntersectionObserver' in window)) {
     var input = q.querySelector('.quiz-input');
     if (input) {
       if (input.id === 'quizPhone') {
-        // "digits===9 YOKI digits===12" qoidasi ham yetarli emas edi:
-        // "+998903456" — 9 ta raqam ("998"+6 ta), lekin "998" bilan
-        // BOSHLANGANI uchun aslida to'liqsiz 998-kodli raqam, shunchaki
-        // tasodifan uzunligi 9ga teng bo'lib qolgan. Shu sababli avval
-        // "998" bilan boshlanish-boshlanmasligini aniqlab, keyin SHU
-        // holatga mos aniq uzunlikni talab qilamiz.
+        // Maydon "+998 " prefiksi bilan boshqariladi (4a-bo'lim), shuning uchun
+        // to'liq raqam har doim "998" + 9 ta raqam = 12 ta raqamdan iborat.
         var digits = input.value.replace(/\D/g, '');
-        if (digits.slice(0, 3) === '998') return digits.length === 12;
-        return digits.length === 9;
+        return digits.indexOf('998') === 0 && digits.length === 12;
       }
       return input.value.trim().length > 0;
     }
